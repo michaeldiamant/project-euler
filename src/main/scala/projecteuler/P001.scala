@@ -16,9 +16,27 @@ object P001 extends App {
       .toList
 
   def sumOfMultiples(ns: List[Int], max: Int): Int =
-    multiples(n = 3, max = max)
-      .union(multiples(n = 5, max = max))
+    (
+      for (n <- ns) yield
+        multiples(n, max))
+      .reduce((xs, ys) => xs.union(ys))
       .distinct
+      .sum
+
+  def sumOfMultiplesFaster(ns: List[Int], max: Int): Int =
+    (
+      for {
+        i <- ns.min to (max - 1)
+        if ns.exists(n => i % n == 0)
+      } yield
+        i)
+      .sum
+
+  def sumOfMultiplesLazily(ns: List[Int], max: Int): Int =
+    Stream
+      .from(ns.min, step = 1)
+      .takeWhile(_ < max)
+      .filter(i => ns.exists(n => i % n == 0))
       .sum
 
   println(sumOfMultiples(3 :: 5 :: Nil, 1000))
