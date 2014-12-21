@@ -11,6 +11,15 @@ import scala.annotation.tailrec
 // exceed four million, find the sum of the even-valued terms.
 object P002 extends App {
 
+  def lazilySumEvenValuedFibonacciUntil(max: Int): Int = {
+    lazy val fib: Stream[Int] =
+      1 #:: 2 #::  fib.zip(fib.tail).map(t => t._1 + t._2)
+    fib
+      .filter(_ % 2 == 0)
+      .takeWhile(_ < max)
+      .sum
+  }
+
   def fibonacciUntil(max: Int): List[Int] = {
     @tailrec
     def doFibonacciUntil(acc: List[Int]): List[Int] =
@@ -31,6 +40,7 @@ object P002 extends App {
         e)
       .sum
 
-
-  println(sumEvenValuedFibonacciUntil(4e6.toInt))
+  val max = 4e6.toInt
+  println(sumEvenValuedFibonacciUntil(max))
+  println(lazilySumEvenValuedFibonacciUntil(max))
 }
