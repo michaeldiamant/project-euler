@@ -13,12 +13,12 @@ object P002 extends App {
 
   def lazilySumEvenValuedFibonacciUntil(max: Int): Int = {
     lazy val fib: Stream[Int] =
-      1 #:: 2 #::  fib.zip(fib.tail).map {
+      1 #:: 2 #:: fib.zip(fib.tail).map {
         case (x, y) => x + y
       }
     fib
       .filter(_ % 2 == 0)
-      .takeWhile(_ < max)
+      .takeWhile(_ <= max)
       .sum
   }
 
@@ -42,7 +42,5 @@ object P002 extends App {
         e)
       .sum
 
-  val max = 4e6.toInt
-  println(sumEvenValuedFibonacciUntil(max))
-  println(lazilySumEvenValuedFibonacciUntil(max))
+  println(lazilySumEvenValuedFibonacciUntil(4e6.toInt))
 }
