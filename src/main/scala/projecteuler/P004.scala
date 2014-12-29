@@ -75,6 +75,9 @@ object P004 extends App {
 
   import PalindromeImplementationExperiments._
 
+  // Run benchmarks in sbt:
+  // run -i 5 -r 10s -wi 5 -w 5s -f1 \
+  // -jvmArgs "-server -Xms512m -Xmx512m -XX:+UseConcMarkSweepGC' .*PalindromeBenchmarks.*"
   class PalindromeBenchmarks {
 
     private def rangeBenchmark(f: Int => Boolean): Seq[Boolean] =
